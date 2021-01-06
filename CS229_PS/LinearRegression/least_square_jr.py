@@ -43,10 +43,7 @@ class LinearRegression:
         x = self.x
         y = self.y
         hypothesis = np.dot(x, w.T)
-        w1 = (y - hypothesis).T.dot(x[:, 0]) / x.shape[0]
-        w2 = (y - hypothesis).T.dot(x[:, 1]) / x.shape[0]
-
-        grad = np.array([w1, w2])
+        grad = (y - hypothesis).T.dot(x) / x.shape[0]
         """End"""
         return grad
 
@@ -72,7 +69,7 @@ class LinearRegression:
             You may use self.loss and self.gradient
             Start
             """
-            w = w + learning_rate * self.gradient(w)
+            w += learning_rate * self.gradient(w)
             loss = self.loss(w)
             print(num_iter, loss)
             lossList.append(loss)
@@ -94,11 +91,7 @@ class LinearRegression:
         Start
         """
         x = self.x
-        if x.T.shape[1] == x.shape[0]:
-            xtx = np.linalg.pinv(np.dot(x.T, x))
-            w = np.dot(np.dot(xtx, x.T), y)
-        else:
-            print("Matrix Shape Error.")
+        w = np.dot(np.dot(np.linalg.pinv(np.dot(x.T, x)), x.T), y)
         """End"""
         return w
 
@@ -114,8 +107,8 @@ class LinearRegression:
         Your code here: You should add a column with all ones to X
         Start
         """
-        temp = np.vstack((ones, x))
-        ypred = np.dot(w, temp)
+        X = np.vstack((ones, x))
+        ypred = np.dot(w, X)
         """End"""
         return ypred
 
