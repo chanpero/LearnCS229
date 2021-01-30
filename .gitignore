@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 *.idea/
-MLinAction_src_py3/
+
+others/
 
